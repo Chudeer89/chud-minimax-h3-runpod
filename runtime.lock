@@ -1,0 +1,8 @@
+torch=2.10.0+cu130
+cuda=13.0
+comfy-kitchen=0.2.35
+comfy-aimdo=0.5.5
+comfyui-frontend-package=1.53.6
+huggingface-hub=1.27.0
+hf-xet=1.6.0
+sageattention=2.2.0
