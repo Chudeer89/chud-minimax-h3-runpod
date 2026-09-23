@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-COMFY=/workspace/runpod-slim/ComfyUI
+COMFY=/opt/comfyui-baked
 LOCK=/opt/chud-h3/nodes.lock
+PY=python3.12
+CONSTRAINT=/opt/comfyui-runtime-constraints.txt
 
-echo "===== ChuD H3: install locked custom nodes ====="
+echo "===== ChuD H3: install locked stack ====="
+echo "Build-time ComfyUI: $COMFY"
 
 while IFS='|' read -r name repo commit; do
     [ -z "$name" ] && continue
 
     if [ "$name" = "ComfyUI" ]; then
-        echo "ComfyUI -> $commit"
+        echo
+        echo "===== COMFYUI ====="
+        echo "$repo"
+        echo "$commit"
+
+        git -C "$COMFY" remote set-url origin "$repo" 2>/dev/null || true
         git -C "$COMFY" fetch origin
         git -C "$COMFY" checkout -f "$commit"
         continue
@@ -19,9 +27,9 @@ while IFS='|' read -r name repo commit; do
     dst="$COMFY/custom_nodes/$name"
 
     echo
-    echo "NODE: $name"
-    echo "REPO: $repo"
-    echo "COMMIT: $commit"
+    echo "===== $name ====="
+    echo "$repo"
+    echo "$commit"
 
     rm -rf "$dst"
     git clone "$repo" "$dst"
@@ -30,15 +38,9 @@ while IFS='|' read -r name repo commit; do
 done < "$LOCK"
 
 echo
-echo "===== install requirements ====="
+echo "===== INSTALL CUSTOM NODE REQUIREMENTS ====="
 
-PY="$COMFY/.venv-cu128/bin/python"
+for req in "$COMFY"/custom_nodes/*/requirements.txt; do
+    [ -f "$req" ] || continue
 
-for d in "$COMFY"/custom_nodes/*; do
-    if [ -f "$d/requirements.txt" ]; then
-        echo "Requirements: $(basename "$d")"
-        "$PY" -m pip install --no-cache-dir -r "$d/requirements.txt"
-    fi
-done
-
-echo "===== custom nodes READY ====="
+    echo "Installing: $req"

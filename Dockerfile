@@ -3,17 +3,9 @@ FROM runpod/comfyui:1.4.6-cuda13.0
 USER root
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
 ENV HF_XET_HIGH_PERFORMANCE=1
 ENV HF_HUB_DISABLE_XET=0
-ENV PYTHONUNBUFFERED=1
-
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        git \
-        curl \
-        wget \
-        ffmpeg \
-    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/chud-h3
 
@@ -34,5 +26,12 @@ RUN chmod +x \
 
 RUN /opt/chud-h3/install-nodes.sh
 
-RUN /workspace/runpod-slim/ComfyUI/.venv-cu128/bin/python -m pip install \
-    --no-cach
+RUN python3.12 -m pip install \
+    --no-cache-dir \
+    -c /opt/comfyui-runtime-constraints.txt \
+    --force-reinstall \
+    "comfy-kitchen==0.2.35" \
+    "comfy-aimdo==0.5.5" \
+    "comfyui-frontend-package==1.53.6" \
+    "huggingface-hub==1.27.0" \
+    "
