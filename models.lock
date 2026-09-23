@@ -1,0 +1,6 @@
+34004507622|/workspace/runpod-slim/ComfyUI/models/diffusion_models/Minimax-h3_Singularity_ref2va_v1.3_int8.safetensors
+15687142551|/workspace/runpod-slim/ComfyUI/models/text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors
+2811065184|/workspace/runpod-slim/ComfyUI/models/vae/minimax_h3_video_vae_int8_convrot.safetensors
+605254808|/workspace/runpod-slim/ComfyUI/models/vae/minimax_h3_audio_vae_fp32.safetensors
+1956193000|/workspace/runpod-slim/ComfyUI/models/loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors
+690592672|/workspace/runpod-slim/ComfyUI/models/latent_upscale_models/minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors

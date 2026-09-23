@@ -1,0 +1,15 @@
+ChuD MiniMax H3 WORKING SNAPSHOT
+Date: Wed Sep 23 10:28:49 UTC 2026
+
+===== GPU =====
+NVIDIA RTX PRO 6000 Blackwell Server Edition, 580.178.04
+
+===== PYTORCH =====
+Torch: 2.10.0+cu130
+CUDA: 13.0
+GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 2g.48gb
+Capability: (12, 0)
+Sage: ['sm120']
+
+===== COMFYUI =====
+3c80da7f87ee359b2d06f107cb3c0797079dfbbb
