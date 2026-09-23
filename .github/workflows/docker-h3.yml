@@ -5,16 +5,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - Dockerfile
-      - docker-start.sh
-      - install-nodes.sh
-      - download-models.py
-      - model_sources.tsv
-      - nodes.lock
-      - runtime.lock
-      - wheels/**
-      - .github/workflows/docker-h3.yml
 
 permissions:
   contents: read
@@ -46,4 +36,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-    
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          tags: |
+            ghcr.io/chudeer8
