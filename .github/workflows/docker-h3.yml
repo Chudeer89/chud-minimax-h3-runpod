@@ -44,4 +44,5 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ghcr.io/chudeer8
+            ghcr.io/chudeer89/chud-minimax-h3-runpod:latest
+            ghcr.io/chudeer89/chud-minimax-h3-runpod:${{ github.sha }}
