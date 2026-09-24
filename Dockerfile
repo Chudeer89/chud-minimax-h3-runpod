@@ -29,9 +29,16 @@ RUN /opt/chud-h3/install-nodes.sh
 RUN python3.12 -m pip install \
     --no-cache-dir \
     -c /opt/comfyui-runtime-constraints.txt \
-    --force-reinstall \
     "comfy-kitchen==0.2.35" \
     "comfy-aimdo==0.5.5" \
     "comfyui-frontend-package==1.53.6" \
     "huggingface-hub==1.27.0" \
-    "
+    "hf-xet==1.6.0"
+
+RUN python3.12 -m pip install \
+    --no-cache-dir \
+    --force-reinstall \
+    --no-deps \
+    /opt/chud-h3/wheels/sm120/sageattention.whl
+
+ENTRYPOINT ["/opt/chud-h3/docker-start.sh"]
