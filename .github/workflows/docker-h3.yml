@@ -18,6 +18,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate scripts
+        run: |
+          bash -n install-nodes.sh
+          bash -n docker-start.sh
+          python3 -m py_compile download-models.py
+
       - name: Free disk space
         run: |
           sudo rm -rf /usr/local/lib/android || true
