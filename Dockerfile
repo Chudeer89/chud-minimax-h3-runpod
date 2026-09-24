@@ -17,7 +17,7 @@ COPY install-nodes.sh /opt/chud-h3/install-nodes.sh
 COPY docker-start.sh /opt/chud-h3/docker-start.sh
 
 COPY wheels/sm120/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl \
-     /opt/chud-h3/wheels/sm120/sageattention.whl
+     /opt/chud-h3/wheels/sm120/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl
 
 RUN chmod +x \
     /opt/chud-h3/install-nodes.sh \
@@ -39,6 +39,6 @@ RUN python3.12 -m pip install \
     --no-cache-dir \
     --force-reinstall \
     --no-deps \
-    /opt/chud-h3/wheels/sm120/sageattention.whl
+    /opt/chud-h3/wheels/sm120/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl
 
 ENTRYPOINT ["/opt/chud-h3/docker-start.sh"]
