@@ -1,15 +1,27 @@
-ChuD MiniMax H3 WORKING SNAPSHOT
-Date: Wed Sep 23 10:28:49 UTC 2026
+ChuD MiniMax H3 SEEDHUNTER v2.1 WORKING SNAPSHOT
+Date: 2026-09-28
 
-===== GPU =====
-NVIDIA RTX PRO 6000 Blackwell Server Edition, 580.178.04
-
-===== PYTORCH =====
+===== BASE RUNTIME =====
+RunPod ComfyUI image: runpod/comfyui:1.4.6-cuda13.0
+Python: 3.12
 Torch: 2.10.0+cu130
 CUDA: 13.0
-GPU: NVIDIA RTX PRO 6000 Blackwell Server Edition MIG 2g.48gb
-Capability: (12, 0)
-Sage: ['sm120']
+ComfyUI locked core: 3c80da7f87ee359b2d06f107cb3c0797079dfbbb
 
-===== COMFYUI =====
-3c80da7f87ee359b2d06f107cb3c0797079dfbbb
+===== VERIFIED V2.1 FEATURES =====
+Pixaroma v1.4.175 loaded
+MiniMaxH3MediaLoader OK
+MiniMaxH3ReferenceSplitter OK
+MiniMaxH3RefModsLoader OK
+H3PromptIDE OK
+RIFEInterpolation OK
+ImpactSwitch OK
+Anything Everywhere OK
+VHS_VideoCombine OK
+BlockSparseAttention OK
+MiniMaxH3ReferenceToVideo OK
+Power Lora Loader (rgthree): fresh rgthree clone required; pinned in nodes.lock
+
+===== NOTES =====
+Impact Pack requirements are installed with a safe dependency subset to avoid SAM2 build-isolation replacing the locked Torch stack.
+A brand-new Pod/account must transfer model bytes once, but restore is automatic and no manual model/node setup is required.
