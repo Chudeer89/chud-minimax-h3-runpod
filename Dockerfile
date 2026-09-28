@@ -15,10 +15,12 @@ COPY install-nodes.sh /opt/chud-h3/install-nodes.sh
 COPY docker-start.sh /opt/chud-h3/docker-start.sh
 COPY restore-v21.sh /opt/chud-h3/restore-v21.sh
 COPY audit-v21.sh /opt/chud-h3/audit-v21.sh
+COPY assemble-workflow.sh /opt/chud-h3/assemble-workflow.sh
 COPY workflows /opt/chud-h3/workflows
 COPY wheels/sm120/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl /opt/chud-h3/wheels/sm120/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl
 
-RUN chmod +x /opt/chud-h3/install-nodes.sh /opt/chud-h3/docker-start.sh /opt/chud-h3/download-models.py /opt/chud-h3/restore-v21.sh /opt/chud-h3/audit-v21.sh
+RUN chmod +x /opt/chud-h3/install-nodes.sh /opt/chud-h3/docker-start.sh /opt/chud-h3/download-models.py /opt/chud-h3/restore-v21.sh /opt/chud-h3/audit-v21.sh /opt/chud-h3/assemble-workflow.sh
+RUN /opt/chud-h3/assemble-workflow.sh /opt/chud-h3/workflows/chunks /opt/chud-h3/workflows/minimaxH3SEEDHUNTERLatent_v21.json
 RUN /opt/chud-h3/install-nodes.sh
 
 RUN python3.12 -m pip install --no-cache-dir -c /opt/comfyui-runtime-constraints.txt \
