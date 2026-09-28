@@ -1,10 +1,10 @@
-name: Build ChuD MiniMax H3 One-Click
+name: Build ChuD MiniMax H3 v2.1 One-Click
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - h3-v2.1
 
 permissions:
   contents: read
@@ -13,7 +13,6 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,7 +21,10 @@ jobs:
         run: |
           bash -n install-nodes.sh
           bash -n docker-start.sh
+          bash -n restore-v21.sh
+          bash -n audit-v21.sh
           python3 -m py_compile download-models.py
+          python3 -m json.tool workflows/minimaxH3SEEDHUNTERLatent_v21.json >/dev/null
 
       - name: Free disk space
         run: |
@@ -50,5 +52,5 @@ jobs:
           push: true
           provenance: false
           tags: |
-            ghcr.io/chudeer89/chud-minimax-h3-runpod:latest
-            ghcr.io/chudeer89/chud-minimax-h3-runpod:${{ github.sha }}
+            ghcr.io/chudeer89/chud-minimax-h3-runpod:v21
+            ghcr.io/chudeer89/chud-minimax-h3-runpod:v21-${{ github.sha }}
