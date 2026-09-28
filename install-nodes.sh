@@ -31,7 +31,8 @@ while IFS='|' read -r name repo commit; do
     if [ "$name" = "ComfyUI" ]; then
         if [ -d "$COMFY/.git" ]; then
             git -C "$COMFY" remote set-url origin "$repo" 2>/dev/null || true
-            git -C "$COMFY" fetch --all --tags
+            # Fetch only the locked commit and avoid tag collisions in baked RunPod images.
+            git -C "$COMFY" fetch --no-tags origin "$commit"
             git -C "$COMFY" checkout -f "$commit"
         else
             echo "INFO: $COMFY is not a git checkout; keeping baked ComfyUI core."
@@ -41,7 +42,9 @@ while IFS='|' read -r name repo commit; do
 
     dst="$COMFY/custom_nodes/$name"
     rm -rf "$dst"
-    git clone --filter=blob:none "$repo" "$dst"
+    git clone --filter=blob:none --no-tags "$repo" "$dst"
+    # Ensure the exact locked revision is available even if it is not at branch HEAD.
+    git -C "$dst" fetch --no-tags origin "$commit" >/dev/null 2>&1 || true
     git -C "$dst" checkout -f "$commit"
 done < "$LOCK"
 
