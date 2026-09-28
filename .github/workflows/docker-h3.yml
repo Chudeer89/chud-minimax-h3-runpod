@@ -17,14 +17,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate scripts
+      - name: Validate scripts and workflow snapshot
         run: |
           bash -n install-nodes.sh
           bash -n docker-start.sh
           bash -n restore-v21.sh
           bash -n audit-v21.sh
+          bash -n assemble-workflow.sh
           python3 -m py_compile download-models.py
-          python3 -m json.tool workflows/minimaxH3SEEDHUNTERLatent_v21.json >/dev/null
+          bash assemble-workflow.sh workflows/chunks /tmp/minimaxH3SEEDHUNTERLatent_v21.json
+          python3 -m json.tool /tmp/minimaxH3SEEDHUNTERLatent_v21.json >/dev/null
 
       - name: Free disk space
         run: |
