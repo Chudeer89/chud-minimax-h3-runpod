@@ -1,6 +1,16 @@
-WarmBloodAban/Minimax-h3_Singularity|Minimax-h3_Singularity_ref2va_v1.3_int8.safetensors|diffusion_models/Minimax-h3_Singularity_ref2va_v1.3_int8.safetensors
-Comfy-Org/MiniMax-H3|text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors|text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors
-Comfy-Org/MiniMax-H3|vae/minimax_h3_video_vae_int8_convrot.safetensors|vae/minimax_h3_video_vae_int8_convrot.safetensors
-Comfy-Org/MiniMax-H3|vae/minimax_h3_audio_vae_fp32.safetensors|vae/minimax_h3_audio_vae_fp32.safetensors
-Comfy-Org/MiniMax-H3|loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors|loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors
-LBH-123-AI/Minimax_h3_latent_Upscaler|minimax_h3_latent_upscaler_3d_conv_v1/minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors|latent_upscale_models/minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors
+# scheme|source|filename-or-destination|destination|revision(optional)
+hf|Comfy-Org/MiniMax-H3|diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|
+hf|Comfy-Org/MiniMax-H3|diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors|diffusion_models/minimax_h3_fl2va_pruned_int8_convrot.safetensors|
+hf|Comfy-Org/MiniMax-H3|text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors|text_encoders/qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors|
+hf|Comfy-Org/MiniMax-H3|vae/minimax_h3_video_vae_fp16.safetensors|vae/minimax_h3_video_vae_fp16.safetensors|
+hf|Kijai/MiniMax-H3-experimental|minimax_h3_video_vae_int8_convrot.safetensors|vae/minimax_h3_video_vae_int8_convrot.safetensors|
+hf|Comfy-Org/MiniMax-H3|vae/minimax_h3_audio_vae_fp32.safetensors|vae/minimax_h3_audio_vae_fp32.safetensors|
+hf|LBH-123-AI/Minimax_h3_latent_Upscaler|minimax_h3_latent_upscaler_3d_conv_v1/minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors|latent_upscale_models/minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors|
+hf|Kijai/MiniMax-H3-TAE|vae_approx/taeh3.safetensors|vae_approx/taeh3.safetensors|
+hf|silveroxides/MiniMax-H3_tests|minimax_h3_fl2v_turbo_silver_dareties_comfy_pruned_v1.safetensors|loras/MINIMAX/minimax_h3_fl2v_turbo_silver_dareties_comfy_pruned_v1.safetensors|
+hf|lightx2v/Minimax-h3-Turbo|minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors|loras/minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors|
+hf|Comfy-Org/MiniMax-H3|loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors|loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors|
+hf|fal/MiniMax-H3-Realism-People-LoRA|h3-realism-people-t2v-i2v-r2v.safetensors|loras/MINIMAX/Skin/h3-realism-people-t2v-i2v-r2v.safetensors|
+hf|gravedigga/loras|mvmt_h3_lora_v1_500.safetensors|loras/MINIMAX/Camera/Minimax_better_motion_h3_lora_v1_500.safetensors|
+hf|larryvrh/MiniMax-H3-Turbo-Lora|minimax_h3_turbo_v4_step600_ema.safetensors|loras/MINIMAX/Turbo/minimax_h3_turbo_v4_step600_ema.safetensors|
+url|https://huggingface.co/buckets/aronzhan/H3-Loras-bucket/resolve/MysticXXX_MMH3-V4-ref2va.safetensors?download=true|loras/MINIMAX/Skin/MysticXXX_MMH3-V4-ref2va.safetensors||
