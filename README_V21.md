@@ -13,7 +13,7 @@ This branch is the reproducible v2.1 setup captured on 2026-09-28.
 - v2.1 Silver DARE-TIES Turbo LoRA
 - Additional H3 LoRAs: Realism People, Better Motion, MysticXXX Ref2VA, Turbo v4 step600, 8-step FL2V, 4-step Ref2V
 - RIFE flownet auto-download
-- v2.1 workflow JSON
+- Exact v2.1 workflow snapshot (stored as compressed chunks and rebuilt automatically)
 
 ## New RunPod / another RunPod account
 
