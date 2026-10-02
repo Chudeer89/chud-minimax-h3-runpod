@@ -24,7 +24,7 @@ RUN /opt/chud-h3/assemble-workflow.sh /opt/chud-h3/workflows/chunks /opt/chud-h3
 RUN /opt/chud-h3/install-nodes.sh
 
 RUN python3.12 -m pip install --no-cache-dir -c /opt/comfyui-runtime-constraints.txt \
-    "comfy-kitchen==0.2.35" \
+    "comfy-kitchen==0.2.36" \
     "comfy-aimdo==0.5.5" \
     "comfyui-frontend-package==1.53.6" \
     "huggingface-hub==1.27.0" \

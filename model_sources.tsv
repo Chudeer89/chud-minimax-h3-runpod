@@ -9,6 +9,7 @@ hf|LBH-123-AI/Minimax_h3_latent_Upscaler|minimax_h3_latent_upscaler_3d_conv_v1/m
 hf|Kijai/MiniMax-H3-TAE|vae_approx/taeh3.safetensors|vae_approx/taeh3.safetensors|
 hf|silveroxides/MiniMax-H3_tests|minimax_h3_fl2v_turbo_silver_dareties_comfy_pruned_v1.safetensors|loras/MINIMAX/minimax_h3_fl2v_turbo_silver_dareties_comfy_pruned_v1.safetensors|
 hf|lightx2v/Minimax-h3-Turbo|minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors|loras/minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors|
+hf|lightx2v/Minimax-h3-Turbo|minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors|loras/MINIMAX/Turbo/minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors|
 hf|Comfy-Org/MiniMax-H3|loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors|loras/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors|
 hf|fal/MiniMax-H3-Realism-People-LoRA|h3-realism-people-t2v-i2v-r2v.safetensors|loras/MINIMAX/Skin/h3-realism-people-t2v-i2v-r2v.safetensors|
 hf|gravedigga/loras|mvmt_h3_lora_v1_500.safetensors|loras/MINIMAX/Camera/Minimax_better_motion_h3_lora_v1_500.safetensors|
