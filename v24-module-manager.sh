@@ -16,7 +16,7 @@ install_node() {
     local wanted="$1"
     while IFS='|' read -r name repo commit; do
         [ -z "$name" ] && continue
-        [[ "$name" == #* ]] && continue
+        case "$name" in \#*) continue ;; esac
         [ "$name" = "$wanted" ] || continue
         local dst="$COMFY/custom_nodes/$name"
         echo "[v24] Installing $name @ $commit"
