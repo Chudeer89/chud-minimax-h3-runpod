@@ -5,7 +5,8 @@ BAKED=/opt/comfyui-baked
 COMFY=/workspace/runpod-slim/ComfyUI
 
 echo "=========================================="
-echo " ChuD MiniMax H3 SEEDHUNTER v2.3.1 One-Click"
+echo " ChuD MiniMax H3 Studio v2.4 Modular"
+echo " H3 core + optional Thai TTS / LTX / Wan"
 echo "=========================================="
 
 mkdir -p /workspace/runpod-slim
@@ -27,11 +28,11 @@ mkdir -p "$COMFY/user/default/workflows"
 cp -f /opt/chud-h3/workflows/minimaxH3SEEDHUNTERLatent_v21.json "$COMFY/user/default/workflows/minimaxH3SEEDHUNTERLatent_v21.json"
 
 echo
-echo "===== DOWNLOAD / REUSE V2.3.1 MODELS ====="
+echo "===== DOWNLOAD / REUSE H3 CORE MODELS ====="
 CHUD_H3_COMFY="$COMFY" CHUD_H3_MANIFEST=/opt/chud-h3/model_sources.tsv python3.12 /opt/chud-h3/download-models.py
 
 echo
-echo "===== CREATE COMPATIBILITY ALIASES ====="
+echo "===== CREATE H3 COMPATIBILITY ALIASES ====="
 mkdir -p "$COMFY/models/loras"
 mkdir -p "$COMFY/models/ultralytics"
 
@@ -49,13 +50,25 @@ if [ -f "$FACE_SRC" ]; then
     echo "[ALIAS] face_yolov8m.pt -> models/ultralytics/"
 fi
 
-echo
-echo "===== MODEL SANITY CHECK ====="
 test -s "$REALISM_SRC" || { echo "ERROR: missing Realism LoRA"; exit 1; }
 test -s "$FACE_SRC" || { echo "ERROR: missing face_yolov8m.pt"; exit 1; }
 
-echo "Realism LoRA: READY"
-echo "Face detector: READY"
+echo
+echo "===== V2.4 OPTIONAL MODULES ====="
+CHUD_H3_COMFY="$COMFY" /opt/chud-h3/v24-module-manager.sh "${CHUD_V24_MODULES:-none}"
+
+if [ "${CHUD_V24_DOWNLOAD_LTX:-0}" = "1" ]; then
+    echo
+    echo "===== DOWNLOAD / REUSE LTX-2.5 MODELS ====="
+    echo "NOTE: LTX weights may require accepted Hugging Face terms and HF_TOKEN."
+    CHUD_H3_COMFY="$COMFY" CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_ltx25.tsv python3.12 /opt/chud-h3/download-models.py
+fi
+
+echo
+echo "===== V2.4 READY ====="
+echo "Modules: ${CHUD_V24_MODULES:-none}"
+echo "Thai TTS endpoint (when enabled): http://127.0.0.1:7865"
+echo "ComfyUI Torch remains locked by the v2.3.1 base."
 
 echo
 echo "===== HAND OFF TO RUNPOD ====="
