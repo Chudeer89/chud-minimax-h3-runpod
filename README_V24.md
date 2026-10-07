@@ -60,3 +60,8 @@ The GitHub Actions build downloads the creator's corrected 2026-10-05 v2.5 workf
 v2.5 support pins the current releases of Pixaroma, H3 Prompt IDE, Fantastic MiniMaxH3 PromptBuilder, MiniMaxH3Mod, and the MiniMax H3 latent upscaler. The Kijai DMAD 4-step LoRA is added to the H3 model manifest; the creator recommends 8 sampling steps at strength 1.0.
 
 The original v2.1 workflow remains installed beside v2.5 as a recovery reference.
+
+
+## Seed Hunter v2.5 required model
+
+The v2.5 workflow selects `Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors` by default. v24 now downloads/reuses that exact checkpoint automatically into `models/diffusion_models/`, so ComfyUI should no longer show it as a Missing Model after a fresh v24 Pod finishes model setup.
