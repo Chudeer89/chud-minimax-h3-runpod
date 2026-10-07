@@ -6,7 +6,7 @@ COMFY=/workspace/runpod-slim/ComfyUI
 
 echo "=========================================="
 echo " ChuD MiniMax H3 Studio v2.4 Modular"
-echo " H3 core + optional Thai TTS / LTX / Wan"
+echo " Seed Hunter v2.5 core + Thai TTS / LTX / Wan"
 echo "=========================================="
 
 mkdir -p /workspace/runpod-slim
@@ -26,6 +26,13 @@ fi
 
 mkdir -p "$COMFY/user/default/workflows"
 cp -f /opt/chud-h3/workflows/minimaxH3SEEDHUNTERLatent_v21.json "$COMFY/user/default/workflows/minimaxH3SEEDHUNTERLatent_v21.json"
+if [ -f /opt/chud-h3/workflows/minimaxH3SEEDHUNTERLatent_v25.json ]; then
+    cp -f /opt/chud-h3/workflows/minimaxH3SEEDHUNTERLatent_v25.json "$COMFY/user/default/workflows/minimaxH3SEEDHUNTERLatent_v25.json"
+    echo "[v24] Official Seed Hunter v2.5 workflow installed."
+else
+    echo "ERROR: Seed Hunter v2.5 workflow was not baked into this image."
+    exit 1
+fi
 
 echo
 echo "===== DOWNLOAD / REUSE H3 CORE MODELS ====="
