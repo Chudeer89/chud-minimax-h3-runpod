@@ -1,4 +1,4 @@
-ComfyUI|https://github.com/Comfy-Org/ComfyUI.git|6b747c0428c343e1417219641db93a4fb7cb69ae
+ComfyUI|https://github.com/Comfy-Org/ComfyUI.git|b0b743566f65daafc423b4fea8a2fbda94b3384a
 ComfyUI-Manager|https://github.com/Comfy-Org/ComfyUI-Manager.git|2a6cb164309d4db45471d4bf14c8beb75014e56c
 ComfyUI-Easy-Use|https://github.com/yolain/ComfyUI-Easy-Use.git|8730ffd14044ee9392db3b192646266576bc67df
 ComfyUI-KJNodes|https://github.com/kijai/ComfyUI-KJNodes.git|d3cfe21625e5170126ce06fbfcfe1d88108688c3
@@ -6,7 +6,8 @@ ComfyUI-VideoHelperSuite|https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
 ComfyUI-Workflow-Encrypt|https://github.com/jtydhr88/ComfyUI-Workflow-Encrypt.git|5ec45fdac73d8bd6d732af76bbe81c94413b3e36
 ComfyUI_Text_Translation|https://github.com/TFL-TFL/ComfyUI_Text_Translation.git|495f9773dd3651a366ebac664fc4b0f301e9b1b3
 Comfyui_Minimax_h3_latent_Upscaler|https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler.git|d7c01b9011f2e8439493f6c02c29995a27df276f
-comfyui-minimax-h3-audio-T8|https://github.com/T8mars/comfyui-minimax-h3-audio-T8.git|b92b12f71a4eb0a9288cbbab26a3c05db9a1c433
+comfyui-minimax-h3-audio-T8|https://github.com/T8mars/comfyui-minimax-h3-audio-T8.git|1048066cbba7cb517673aade65e7ef9508269acb
+ComfyUI-H3-FaceRefine|https://github.com/Carasibana/ComfyUI-H3-FaceRefine.git|d8521d14fe0d721d80cd9417fff5a559cbc21aba
 ComfyUI-Fantastic-MiniMaxH3-PromptBuilder|https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder.git|23038f5050acdcbb8e938bfd7c87a18d2cc84aab
 ComfyUI-Pixaroma|https://github.com/pixaroma/ComfyUI-Pixaroma.git|7c464447ce2a17dff9489b79d4daf32e55b28f38
 ComfyUI-H3-Prompt-IDE|https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE.git|36f8a720e0b0775ecdb7bae41fceae3b513ff2cd
