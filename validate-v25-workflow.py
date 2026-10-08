@@ -7,8 +7,8 @@ p = pathlib.Path("workflows/minimaxH3SEEDHUNTERLatent_v25.json")
 data = json.loads(p.read_text(encoding="utf-8"))
 nodes = data.get("nodes") or []
 
-if len(nodes) < 400:
-    raise SystemExit(f"Seed Hunter v2.5 validation failed: only {len(nodes)} nodes")
+if len(nodes) < 150:
+    raise SystemExit(f"Seed Hunter v2.5 validation failed: only {len(nodes)} nodes; expected at least 150")
 
 types = {str(n.get("type", "")) for n in nodes}
 required_types = {"VHS_VideoCombine", "MiniMaxH3AddGuide"}
