@@ -47,6 +47,8 @@ REALISM_SRC="$COMFY/models/loras/MINIMAX/Skin/h3-realism-people-t2v-i2v-r2v.safe
 REALISM_ALIAS="$COMFY/models/loras/h3-realism-people-t2v-i2v-r2v.safetensors"
 FACE_SRC="$COMFY/models/ultralytics/bbox/face_yolov8m.pt"
 FACE_ALIAS="$COMFY/models/ultralytics/face_yolov8m.pt"
+DMAD_SRC="$COMFY/models/loras/MINIMAX/minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors"
+DMAD_TURBO_ALIAS="$COMFY/models/loras/MINIMAX/Turbo/minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors"
 
 if [ -f "$REALISM_SRC" ]; then
     ln -sfn "$REALISM_SRC" "$REALISM_ALIAS"
@@ -55,6 +57,11 @@ fi
 if [ -f "$FACE_SRC" ]; then
     ln -sfn "$FACE_SRC" "$FACE_ALIAS"
     echo "[ALIAS] face_yolov8m.pt -> models/ultralytics/"
+fi
+if [ -f "$DMAD_SRC" ]; then
+    mkdir -p "$COMFY/models/loras/MINIMAX/Turbo"
+    ln -sfn "$DMAD_SRC" "$DMAD_TURBO_ALIAS"
+    echo "[ALIAS] DMAD 4-step -> MINIMAX/Turbo/"
 fi
 
 test -s "$REALISM_SRC" || { echo "ERROR: missing Realism LoRA"; exit 1; }
