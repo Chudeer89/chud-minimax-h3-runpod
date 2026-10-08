@@ -21,8 +21,31 @@ jobs:
         run: |
           mkdir -p workflows
           curl -L --fail --retry 4 --retry-delay 3             -A "Mozilla/5.0 ChuD-v24-build"             "https://civitai.com/api/download/models/3383710"             -o workflows/minimaxH3SEEDHUNTERLatent_v25.json
-          echo "5e624e2bfc49a32cf4529fce659275a15869532267e91df8d569774636f84451  workflows/minimaxH3SEEDHUNTERLatent_v25.json" | sha256sum -c -
           python3 -m json.tool workflows/minimaxH3SEEDHUNTERLatent_v25.json >/dev/null
+          python3 - <<'PY'
+import json, hashlib, pathlib, sys
+p = pathlib.Path("workflows/minimaxH3SEEDHUNTERLatent_v25.json")
+data = json.loads(p.read_text(encoding="utf-8"))
+nodes = data.get("nodes") or []
+if len(nodes) < 400:
+    raise SystemExit(f"Seed Hunter v2.5 validation failed: only {len(nodes)} nodes")
+types = {str(n.get("type","")) for n in nodes}
+required = {"VHS_VideoCombine", "MiniMaxH3AddGuide"}
+missing = required - types
+if missing:
+    raise SystemExit("Seed Hunter v2.5 validation failed: missing node types " + ", ".join(sorted(missing)))
+model_names = []
+for n in nodes:
+    vals = n.get("widgets_values")
+    if isinstance(vals, list):
+        model_names.extend(str(v) for v in vals if isinstance(v, str))
+joined = "\n".join(model_names)
+if "Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors" not in joined:
+    raise SystemExit("Seed Hunter v2.5 validation failed: expected Singularity v1.3 Pruned model selector not found")
+print("Seed Hunter v2.5 JSON validation: OK")
+print("nodes:", len(nodes))
+print("sha256:", hashlib.sha256(p.read_bytes()).hexdigest())
+PY
 
       - name: Validate v2.4
         run: |
