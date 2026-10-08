@@ -20,7 +20,7 @@ jobs:
       - name: Fetch official Seed Hunter v2.5 workflow
         run: |
           mkdir -p workflows
-          curl -L --fail --retry 4 --retry-delay 3             -A "Mozilla/5.0 ChuD-v24-build"             "https://civitai.com/api/download/models/3383710?fileId=3273892"             -o workflows/minimaxH3SEEDHUNTERLatent_v25.json
+          curl -L --fail --retry 4 --retry-delay 3             -A "Mozilla/5.0 ChuD-v24-build"             "https://civitai.com/api/download/models/3383710"             -o workflows/minimaxH3SEEDHUNTERLatent_v25.json
           echo "5e624e2bfc49a32cf4529fce659275a15869532267e91df8d569774636f84451  workflows/minimaxH3SEEDHUNTERLatent_v25.json" | sha256sum -c -
           python3 -m json.tool workflows/minimaxH3SEEDHUNTERLatent_v25.json >/dev/null
 
