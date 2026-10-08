@@ -37,6 +37,30 @@ jobs:
           bash assemble-workflow.sh workflows/chunks /tmp/minimaxH3SEEDHUNTERLatent_v21.json
           python3 -m json.tool /tmp/minimaxH3SEEDHUNTERLatent_v21.json >/dev/null
 
+      - name: Test Windows-style LoRA aliases
+        run: |
+          T=$(mktemp -d)
+          mkdir -p "$T/models/loras/MINIMAX/Turbo"
+          echo x > "$T/models/loras/MINIMAX/minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors"
+          echo x > "$T/models/loras/MINIMAX/Turbo/t.safetensors"
+          echo x > "$T/models/loras/root.safetensors"
+          sed -n '/^LORAS=/,/Windows-style backslash/p' docker-start.sh > /tmp/alias.sh
+          test -s /tmp/alias.sh
+          COMFY="$T" bash -euo pipefail -c 'source /tmp/alias.sh; source /tmp/alias.sh'
+          ls -la "$T/models/loras"
+          python3 - "$T/models/loras" <<'PY'
+          import os, sys
+          base = sys.argv[1]
+          bs = chr(92)  # backslash, as saved by ComfyUI on Windows
+          rels = ["MINIMAX/minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors",
+                  "MINIMAX/Turbo/t.safetensors", "root.safetensors"]
+          for name in rels + [r.replace("/", bs) for r in rels]:
+              # same resolution as ComfyUI folder_paths.get_full_path
+              p = os.path.join(base, os.path.relpath(os.path.join("/", name), "/"))
+              assert os.path.isfile(p), p
+              print("OK", name)
+          PY
+
       - name: Free disk space
         run: |
           sudo rm -rf /usr/local/lib/android || true

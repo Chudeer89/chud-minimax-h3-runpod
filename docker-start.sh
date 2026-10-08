@@ -64,6 +64,20 @@ if [ -f "$DMAD_SRC" ]; then
     echo "[ALIAS] DMAD 4-step -> MINIMAX/Turbo/"
 fi
 
+# Workflows saved on Windows store LoRA names like "MINIMAX\file.safetensors".
+# On Linux ComfyUI treats that as one literal filename, so the LoRA is silently
+# skipped. Expose every LoRA in a subfolder under its backslash name as well.
+LORAS="$COMFY/models/loras"
+find "$LORAS" -maxdepth 1 -xtype l -name '*\\*' -delete 2>/dev/null || true
+BS_COUNT=0
+while IFS= read -r -d '' f; do
+    rel="${f#"$LORAS"/}"
+    case "$rel" in */*) ;; *) continue ;; esac
+    ln -sfn "$f" "$LORAS/${rel//\//\\}"
+    BS_COUNT=$((BS_COUNT + 1))
+done < <(find "$LORAS" -mindepth 2 -type f -name '*.safetensors' -print0)
+echo "[ALIAS] $BS_COUNT LoRA(s) -> Windows-style backslash names"
+
 test -s "$REALISM_SRC" || { echo "ERROR: missing Realism LoRA"; exit 1; }
 test -s "$FACE_SRC" || { echo "ERROR: missing face_yolov8m.pt"; exit 1; }
 
