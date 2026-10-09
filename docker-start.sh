@@ -9,10 +9,25 @@ echo " ChuD MiniMax H3 Studio v2.4 Modular"
 echo " Seed Hunter v2.5 core + Thai TTS / LTX / Wan"
 echo "=========================================="
 
+# cp -a prints nothing for minutes on a new volume; report progress every 10 s.
+copy_with_progress() {
+    local src="$1" dst="$2" total cur pid
+    total=$(du -sb "$src" | cut -f1)
+    cp -a "$src" "$dst" &
+    pid=$!
+    while kill -0 "$pid" 2>/dev/null; do
+        sleep 10
+        cur=$(du -sb "$dst" 2>/dev/null | cut -f1 || echo 0)
+        awk -v c="${cur:-0}" -v t="$total" 'BEGIN { printf "[COPY %5.1f%%] %.1f / %.1f GiB\n", (t ? 100*c/t : 0), c/1073741824, t/1073741824 }'
+    done
+    wait "$pid"
+    echo "[COPY 100.0%] ComfyUI ready on the volume"
+}
+
 mkdir -p /workspace/runpod-slim
 if [ ! -d "$COMFY" ]; then
     echo "First boot: copying locked ComfyUI..."
-    cp -a "$BAKED" "$COMFY"
+    copy_with_progress "$BAKED" "$COMFY"
 else
     echo "Existing workspace found: syncing locked code and nodes..."
     rsync -a --delete \
