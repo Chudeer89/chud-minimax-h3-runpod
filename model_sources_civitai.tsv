@@ -1,0 +1,8 @@
+# Civitai models approved for chud_studio. Downloaded only when CIVITAI_TOKEN is set on the pod (your own token).
+# civitai|model-version-id|file-id|dest-under-models|sha256|bytes
+# MiniMax H3 SparseRef15 Hybrid, Pruned Partial-INT8 V1.0 (FL2VA-based, strong identity) — civitai.com/models/2900456
+civitai|3301688|3187490|diffusion_models/minimaxH3Sparseref15_prunedPartialINT8V10.safetensors|a5402633abaa763c86d2a04e98d314510c1d9698e136c664a709f3ec63255a27|20967609144
+# Male POV LoRA v1.0 (ref2va; trigger "mpov, first-person perspective pov video") — civitai.com/models/2966380
+civitai|3361122|3248858|loras/MINIMAX/Camera/MMH3-MPOV.safetensors|5d5011942015fa45533b262dbde638895ca722d3d34d1efe9e4665a25d768e28|131265336
+# Frozen World time-freeze LoRA v1.0 (trigger "timefr33ze") — civitai.com/models/2986051
+civitai|3385432|3274246|loras/MINIMAX/FX/FrozenWorld_v1.safetensors|3ba12e2509b842b3b16de572b472f71ff9e853fdf88bae842e3ac9c8f343fefc|310170072

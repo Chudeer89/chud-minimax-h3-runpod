@@ -106,6 +106,14 @@ echo
 echo "===== V2.4 OPTIONAL MODULES ====="
 CHUD_H3_COMFY="$COMFY" /opt/chud-h3/v24-module-manager.sh "${CHUD_V24_MODULES:-none}"
 
+if [ -n "${CIVITAI_TOKEN:-}" ]; then
+    echo
+    echo "===== DOWNLOAD / REUSE CIVITAI MODELS (SparseRef15 Hybrid, Male POV, Frozen World) ====="
+    CHUD_H3_COMFY="$COMFY" CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_civitai.tsv python3.12 /opt/chud-h3/download-models.py         || echo "WARNING: Civitai models not ready; H3 core still works"
+else
+    echo "[INFO] CIVITAI_TOKEN not set: skipping Civitai models (SparseRef15 Hybrid, Male POV, Frozen World)"
+fi
+
 echo
 echo "===== V2.4 READY ====="
 echo "Modules: ${CHUD_V24_MODULES:-none}"

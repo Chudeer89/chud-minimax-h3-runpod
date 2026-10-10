@@ -3,8 +3,10 @@
 
 Manifest lines:  hf|repo|file-in-repo|dest-under-models|revision(optional)
                  url|https://...|dest-under-models
-Env: CHUD_H3_COMFY, CHUD_H3_STAGE, CHUD_H3_MANIFEST, CHUD_H3_PARALLEL (default 4), HF_TOKEN
+                 civitai|model-version-id|file-id|dest-under-models|sha256|bytes
+Env: CHUD_H3_COMFY, CHUD_H3_STAGE, CHUD_H3_MANIFEST, CHUD_H3_PARALLEL (default 4), HF_TOKEN, CIVITAI_TOKEN
 """
+import hashlib
 import os
 import shutil
 import threading
@@ -25,6 +27,7 @@ STAGE = Path(os.getenv("CHUD_H3_STAGE", "/workspace/h3-stage"))
 MANIFEST = Path(os.getenv("CHUD_H3_MANIFEST", str(Path(__file__).with_name("model_sources.tsv"))))
 PARALLEL = max(1, int(os.getenv("CHUD_H3_PARALLEL", "4")))
 TOKEN = os.getenv("HF_TOKEN") or os.getenv("HUGGING_FACE_HUB_TOKEN")
+CIVITAI_TOKEN = os.getenv("CIVITAI_TOKEN")
 RETRIES = 3
 GIB = 1024 ** 3
 MIB = 1024 ** 2
@@ -56,6 +59,8 @@ def human_eta(seconds):
 
 def remote_size(job):
     try:
+        if job["scheme"] == "civitai":      # exact byte size is pinned in the manifest
+            return job["bytes"]
         if job["scheme"] == "hf":
             url = hf_hub_url(repo_id=job["repo"], filename=job["file"], revision=job["rev"] or "main")
             meta = get_hf_file_metadata(url, token=TOKEN)
@@ -79,6 +84,10 @@ def parse_manifest():
         if p[0] == "hf" and len(p) >= 4:
             jobs.append({"scheme": "hf", "repo": p[1], "file": p[2], "dest": MODELS / p[3],
                          "rev": p[4] if len(p) > 4 and p[4] else None})
+        elif p[0] == "civitai" and len(p) >= 6:
+            jobs.append({"scheme": "civitai", "rev": None, "dest": MODELS / p[3], "sha256": p[4].lower(),
+                         "bytes": int(p[5]),
+                         "url": f"https://civitai.com/api/download/models/{p[1]}?type=Model&format=SafeTensor&fileId={p[2]}"})
         elif p[0] == "url" and len(p) >= 3:
             jobs.append({"scheme": "url", "url": p[1], "dest": MODELS / p[2], "rev": None})
         else:
@@ -102,9 +111,26 @@ def fetch(job):
                                    local_dir=str(stage), token=TOKEN))
     else:
         src = stage / job["dest"].name
-        req = urllib.request.Request(job["url"], headers={"User-Agent": "Mozilla/5.0"})
+        url = job["url"]
+        if job["scheme"] == "civitai":
+            if not CIVITAI_TOKEN:
+                raise RuntimeError("CIVITAI_TOKEN is not set (Civitai downloads need your account token)")
+            # token as a query parameter: an Authorization header would follow the redirect to the
+            # signed storage URL and be rejected there
+            url += f"&token={CIVITAI_TOKEN}"
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
         with urllib.request.urlopen(req, timeout=60) as r, open(src, "wb") as out:
+            if "text/html" in (r.headers.get("Content-Type") or ""):
+                raise RuntimeError("got a web page instead of the file (token missing or invalid?)")
             shutil.copyfileobj(r, out, 8 * MIB)
+        if job.get("sha256"):
+            h = hashlib.sha256()
+            with open(src, "rb") as f:
+                for block in iter(lambda: f.read(16 * MIB), b""):
+                    h.update(block)
+            if h.hexdigest() != job["sha256"]:
+                src.unlink(missing_ok=True)
+                raise RuntimeError("sha256 mismatch")
     job["dest"].parent.mkdir(parents=True, exist_ok=True)
     shutil.move(str(src), str(job["dest"]))
     shutil.rmtree(stage, ignore_errors=True)

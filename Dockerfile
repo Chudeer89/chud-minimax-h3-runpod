@@ -11,6 +11,7 @@ COPY nodes.lock /opt/chud-h3/nodes.lock
 COPY nodes.v24.optional.lock /opt/chud-h3/nodes.v24.optional.lock
 COPY runtime.lock /opt/chud-h3/runtime.lock
 COPY model_sources.tsv /opt/chud-h3/model_sources.tsv
+COPY model_sources_civitai.tsv /opt/chud-h3/model_sources_civitai.tsv
 COPY download-models.py /opt/chud-h3/download-models.py
 COPY install-nodes.sh /opt/chud-h3/install-nodes.sh
 COPY v24-module-manager.sh /opt/chud-h3/v24-module-manager.sh
