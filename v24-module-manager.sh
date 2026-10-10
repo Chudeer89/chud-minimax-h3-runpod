@@ -41,6 +41,15 @@ fi
 BEFORE=$("$PY" -c 'import torch; print(torch.__version__)')
 echo "[v24] Comfy Torch before extras: $BEFORE"
 
+if has_module extender; then
+    install_node "ComfyUI_MiniMax_H3_Extender"     # long one-take videos: chains clips with motion context
+fi
+
+if has_module speed; then
+    install_node "ComfyUI-SolAttn_triton"          # attention speed-up
+    install_node "ComfyUI-Spectrum-MiniMax-H3"     # training-free Spectrum acceleration
+fi
+
 AFTER=$("$PY" -c 'import torch; print(torch.__version__)')
 echo "[v24] Comfy Torch after extras: $AFTER"
 if [ "$BEFORE" != "$AFTER" ]; then

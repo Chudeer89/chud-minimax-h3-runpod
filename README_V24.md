@@ -15,6 +15,9 @@ Set CHUD_V24_MODULES to a comma-separated list:
 
 - none: H3 only
 - tts: H3 + Thai TTS bridge
+- extender: H3 + MiniMax H3 Extender (long one-take videos)
+- speed: H3 + SolAttn + Spectrum speed-ups (test quality before using)
+- e.g. tts,extender,speed
 
 
 ## Thai voice design
