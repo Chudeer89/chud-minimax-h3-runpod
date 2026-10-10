@@ -6,3 +6,5 @@ civitai|3301688|3187490|diffusion_models/minimaxH3Sparseref15_prunedPartialINT8V
 civitai|3361122|3248858|loras/MINIMAX/Camera/MMH3-MPOV.safetensors|5d5011942015fa45533b262dbde638895ca722d3d34d1efe9e4665a25d768e28|131265336
 # Frozen World time-freeze LoRA v1.0 (trigger "timefr33ze") — civitai.com/models/2986051
 civitai|3385432|3274246|loras/MINIMAX/FX/FrozenWorld_v1.safetensors|3ba12e2509b842b3b16de572b472f71ff9e853fdf88bae842e3ac9c8f343fefc|310170072
+# Motion Combat Reasoning LoRA v1 (action/combat motion; works with REF2VA, FL2VA and Hybrid) — civitai.com/models/2979777
+civitai|3377709|3266149|loras/MINIMAX/Motion/DaSiWa-MMH3-Motion-Combat-Reasoning_r128.safetensors|76e38d290668eeaf6282c38e7566a0b91ca863a9d011e379a58e351921d77d24|332346328
