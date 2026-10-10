@@ -41,14 +41,6 @@ fi
 BEFORE=$("$PY" -c 'import torch; print(torch.__version__)')
 echo "[v24] Comfy Torch before extras: $BEFORE"
 
-if has_module ltx; then
-    install_node "ComfyUI-LTXVideo"
-fi
-
-if has_module wan; then
-    install_node "ComfyUI-WanVideoWrapper"
-fi
-
 AFTER=$("$PY" -c 'import torch; print(torch.__version__)')
 echo "[v24] Comfy Torch after extras: $AFTER"
 if [ "$BEFORE" != "$AFTER" ]; then

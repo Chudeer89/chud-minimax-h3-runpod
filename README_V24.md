@@ -6,8 +6,6 @@ v2.4 keeps the proven v2.3.1 runtime as the fallback, but the primary H3 workflo
 
 - H3 Core: official Seed Hunter v2.5, including Dialogue / Voice Clone seed hunting, redesigned controls, independent stage-1/stage-2 sparse-attention toggles, corrected LoRA loader, prompt/image/video/audio generation, Ref2VA, FaceRefine, and 2K final.
 - Thai Voice: IndexTTS2 Thai LoRA sidecar on port 7865. H3 audio can be supplied as emotion reference; final Thai speech comes from the Thai TTS output.
-- LTX-2.5: optional VFX branch for Alpha/Matting, Refine Details, controls and upscale.
-- Wan2.2 Animate: optional motion / character replacement branch.
 
 The modules are independent. They can be enabled only when a job needs them so an L40S does not have to keep all large models resident at once.
 
@@ -17,11 +15,7 @@ Set CHUD_V24_MODULES to a comma-separated list:
 
 - none: H3 only
 - tts: H3 + Thai TTS bridge
-- ltx: H3 + LTX ComfyUI nodes
-- wan: H3 + WanVideoWrapper
-- tts,ltx,wan: install all optional code modules
 
-Large LTX/Wan weights are NOT downloaded automatically by the image. This is intentional to avoid exhausting /workspace. Use the module model manifests when the branch is enabled for a project.
 
 ## Thai voice design
 
@@ -42,8 +36,6 @@ IndexTTS2 currently requires Python < 3.12, while the H3 ComfyUI runtime is Pyth
 
 ## Pinned optional sources
 
-- Lightricks/ComfyUI-LTXVideo @ 3bf3ca62595f1764c47d01c35c8e5dfe47e1a88f
-- kijai/ComfyUI-WanVideoWrapper @ 088128b224242e110d3906c6750e9a3a348a659b
 - dubbing-ai/indextts2-thai @ 1a5ef7de72b8a39408581153d45307be29a20c0d
 
 ## Safety / stability

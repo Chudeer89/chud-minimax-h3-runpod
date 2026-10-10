@@ -6,7 +6,7 @@ COMFY=/workspace/runpod-slim/ComfyUI
 
 echo "=========================================="
 echo " ChuD MiniMax H3 Studio v2.4 Modular"
-echo " Seed Hunter v2.5 core + Thai TTS / LTX / Wan"
+echo " Seed Hunter v2.5 core + Thai TTS"
 echo "=========================================="
 
 # cp -a prints nothing for minutes on a new volume; report progress every 10 s.
@@ -105,13 +105,6 @@ test -s "$FACE_SRC" || { echo "ERROR: missing face_yolov8m.pt"; exit 1; }
 echo
 echo "===== V2.4 OPTIONAL MODULES ====="
 CHUD_H3_COMFY="$COMFY" /opt/chud-h3/v24-module-manager.sh "${CHUD_V24_MODULES:-none}"
-
-if [ "${CHUD_V24_DOWNLOAD_LTX:-0}" = "1" ]; then
-    echo
-    echo "===== DOWNLOAD / REUSE LTX-2.5 MODELS ====="
-    echo "NOTE: LTX weights may require accepted Hugging Face terms and HF_TOKEN."
-    CHUD_H3_COMFY="$COMFY" CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_ltx25.tsv python3.12 /opt/chud-h3/download-models.py
-fi
 
 echo
 echo "===== V2.4 READY ====="
