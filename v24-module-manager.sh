@@ -2,7 +2,11 @@
 set -euo pipefail
 
 COMFY="${CHUD_H3_COMFY:-/workspace/runpod-slim/ComfyUI}"
-PY="$COMFY/.venv-cu128/bin/python"
+# Same interpreter the baked core nodes use (install-nodes.sh); a template venv wins if present.
+PY="${CHUD_H3_PYTHON:-python3.12}"
+if [ -z "${CHUD_H3_PYTHON:-}" ] && [ -x "$COMFY/.venv-cu128/bin/python" ]; then
+    PY="$COMFY/.venv-cu128/bin/python"
+fi
 LOCK="/opt/chud-h3/nodes.v24.optional.lock"
 MODULES="${1:-${CHUD_V24_MODULES:-none}}"
 CONSTRAINT="/opt/comfyui-runtime-constraints.txt"

@@ -104,7 +104,8 @@ test -s "$FACE_SRC" || { echo "ERROR: missing face_yolov8m.pt"; exit 1; }
 
 echo
 echo "===== V2.4 OPTIONAL MODULES ====="
-CHUD_H3_COMFY="$COMFY" /opt/chud-h3/v24-module-manager.sh "${CHUD_V24_MODULES:-none}"
+CHUD_H3_COMFY="$COMFY" /opt/chud-h3/v24-module-manager.sh "${CHUD_V24_MODULES:-none}" \
+    || echo "WARNING: optional modules failed; H3 core still starts"
 
 if [ -n "${CIVITAI_TOKEN:-}" ]; then
     echo
