@@ -45,6 +45,10 @@ if has_module extender; then
     install_node "ComfyUI_MiniMax_H3_Extender"     # long one-take videos: chains clips with motion context
 fi
 
+if has_module motion; then
+    install_node "ComfyUI-MAINodes"                # Motion Lab: temporal upsampling / de-rope for fast action
+fi
+
 if has_module speed; then
     install_node "ComfyUI-SolAttn_triton"          # attention speed-up
     install_node "ComfyUI-Spectrum-MiniMax-H3"     # training-free Spectrum acceleration

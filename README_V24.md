@@ -17,7 +17,8 @@ Set CHUD_V24_MODULES to a comma-separated list:
 - tts: H3 + Thai TTS bridge
 - extender: H3 + MiniMax H3 Extender (long one-take videos)
 - speed: H3 + SolAttn + Spectrum speed-ups (test quality before using)
-- e.g. tts,extender,speed
+- motion: H3 + MatlowAI MAINodes Motion Lab (de-rope fast action)
+- e.g. tts,extender,speed,motion
 
 
 ## Thai voice design
