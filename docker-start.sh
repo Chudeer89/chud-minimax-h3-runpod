@@ -49,11 +49,7 @@ else
     exit 1
 fi
 
-# Qwen Image 2.1 character-sheet workflows + the mannequin layout template
-cp -f /opt/chud-h3/workflows/extra/*.json "$COMFY/user/default/workflows/"
 mkdir -p "$COMFY/input"
-cp -f /opt/chud-h3/workflows/extra/chud_qwen_sheet_template.png "$COMFY/input/"
-echo "[v24] Qwen character-sheet workflows installed."
 
 echo
 echo "===== DOWNLOAD / REUSE H3 CORE MODELS ====="
