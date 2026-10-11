@@ -1,14 +1,9 @@
 # Civitai models approved for chud_studio. Downloaded only when CIVITAI_TOKEN is set on the pod (your own token).
 # civitai|model-version-id|file-id|dest-under-models|sha256|bytes
 # MiniMax H3 SparseRef15 Hybrid, Pruned Partial-INT8 V1.0 (FL2VA-based, strong identity) — civitai.com/models/2900456
-civitai|3301688|3187490|diffusion_models/minimaxH3Sparseref15_prunedPartialINT8V10.safetensors|a5402633abaa763c86d2a04e98d314510c1d9698e136c664a709f3ec63255a27|20967609144
 # Male POV LoRA v1.0 (ref2va; trigger "mpov, first-person perspective pov video") — civitai.com/models/2966380
-civitai|3361122|3248858|loras/MINIMAX/Camera/MMH3-MPOV.safetensors|5d5011942015fa45533b262dbde638895ca722d3d34d1efe9e4665a25d768e28|131265336
 # Frozen World time-freeze LoRA v1.0 (trigger "timefr33ze") — civitai.com/models/2986051
-civitai|3385432|3274246|loras/MINIMAX/FX/FrozenWorld_v1.safetensors|3ba12e2509b842b3b16de572b472f71ff9e853fdf88bae842e3ac9c8f343fefc|310170072
 # Motion Combat Reasoning LoRA v1 (action/combat motion; works with REF2VA, FL2VA and Hybrid) — civitai.com/models/2979777
 civitai|3377709|3266149|loras/MINIMAX/Motion/DaSiWa-MMH3-Motion-Combat-Reasoning_r128.safetensors|76e38d290668eeaf6282c38e7566a0b91ca863a9d011e379a58e351921d77d24|332346328
 # DaSiWa MiniMax H3 Hybrid v4 int8 (REF2VA + FL2VA compatible, better motion/action, clean audio) — civitai.com/models/2877206
-civitai|3391862|3281578|diffusion_models/DasiwaMinimaxH3_dasiwaHybridV4_int8.safetensors|4ad2a1d7135c77f799ba9b93af893fc2654315408c069a26f6516cded1e8a53b|20967668616
 # MiniMax-H3 x Z-Image ref2va int8 (richer sets and textures, same identity; drop-in ref2va) — civitai.com/models/2880921
-civitai|3256384|3141163|diffusion_models/minimaxH3_ZImageGraft_ref2va_int8.safetensors|71b8085ac4221ee036708c230a007d617dcca1b0028b95bb4ee106cb2a385c5|20970379680
