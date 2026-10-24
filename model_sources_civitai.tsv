@@ -7,3 +7,5 @@
 civitai|3377709|3266149|loras/MINIMAX/Motion/DaSiWa-MMH3-Motion-Combat-Reasoning_r128.safetensors|76e38d290668eeaf6282c38e7566a0b91ca863a9d011e379a58e351921d77d24|332346328
 # DaSiWa MiniMax H3 Hybrid v4 int8 (REF2VA + FL2VA compatible, better motion/action, clean audio) — civitai.com/models/2877206
 # MiniMax-H3 x Z-Image ref2va int8 (richer sets and textures, same identity; drop-in ref2va) — civitai.com/models/2880921
+# MMH3 Mystic XXX v5.0 ref2va (skin/look LoRA, FaboroHacks recipe test 2026-10-24; commercial use allowed) — civitai.com/models/2856467
+civitai|3416478|3311427|loras/MINIMAX/Skin/MysticXXX_MMH3-V5-ref2va.safetensors|f57c76e761f7a5113e541ad58e84c648a5fe4d3cfbc277d0c44ae9763da29afe|138339432
