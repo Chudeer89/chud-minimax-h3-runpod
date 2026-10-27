@@ -111,6 +111,13 @@ else
     echo "[INFO] CIVITAI_TOKEN not set: skipping Civitai models (Motion Combat LoRA)"
 fi
 
+# Second render engine "x2" (H3-X2-Stream, chud_studio/x2stream.py): 26 GB of models fetched in the background
+# so ComfyUI starts as usual; studio.py waits for the files before an x2 scene. CHUD_X2=0 skips them.
+if [ "${CHUD_X2:-1}" != "0" ]; then
+    echo "[x2] Background download of the x2 engine models -> /workspace/x2-models.log"
+    CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-x2 CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_x2.tsv         nohup python3.12 /opt/chud-h3/download-models.py > /workspace/x2-models.log 2>&1 &
+fi
+
 echo
 echo "===== V2.4 READY ====="
 echo "Modules: ${CHUD_V24_MODULES:-none}"

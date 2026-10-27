@@ -1,0 +1,5 @@
+# Second render engine "x2" (chud_studio/x2stream.py): H3-X2-Stream graph. Downloaded in the BACKGROUND after
+# the core models, so ComfyUI starts as usual; studio.py waits for these files before an x2 scene.
+# scheme|source|filename-or-destination|destination|revision(optional)
+hf|MATLOWAI/minimax-h3-fused-turbo-int8-convrot|diffusion_models/minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors|diffusion_models/minimax_h3_fused_refdelta_r1024_turbo8_mystic07_int8_convrot.safetensors|8a8dffaa0cd99c6184833ae0a3b4e9b0089c17b3
+hf|speach1sdef178/MiniMax-H3-X2-Detail-VAE|MiniMax-H3-X2-Detail-v1.safetensors|vae/MiniMax-H3-X2-Detail-v1.safetensors|af8c92d267c6849fec5032c35a65d5766737b338
