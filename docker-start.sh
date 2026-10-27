@@ -49,6 +49,9 @@ else
     exit 1
 fi
 
+cp -f /opt/chud-h3/workflows/ChuD_X2_Stream.json "$COMFY/user/default/workflows/ChuD_X2_Stream.json"
+echo "[x2] ChuD X2 Stream workflow installed."
+
 mkdir -p "$COMFY/input"
 
 echo
