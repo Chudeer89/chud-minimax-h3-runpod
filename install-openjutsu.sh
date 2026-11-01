@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # MV image only (Dockerfile.mv-openjutsu), run at build time on top of the v24 MV image (Krea 2 + X2 stay as they are):
-# ComfyUI core -> v0.41.2 (Openjutsu needs native H3, SAM 3.1 and TextGenerate from 0.41.2), the Openjutsu node packs,
+# ComfyUI core -> v0.43.2 (Openjutsu needs 0.41.2+ for native H3, SAM 3.1, TextGenerate; the MOSS + Krea 2 stills mix
+# needs 0.43 for CLIPLoader moss_image, ResolutionSelector, Math/Switch), the Openjutsu node packs,
 # Node 22, the Openjutsu app and comfy-api-proxy 0.1.6. The film image (Dockerfile, install-nodes.sh) never runs this.
 set -euo pipefail
 
 COMFY=/opt/comfyui-baked
 PY=python3.12
 LOCK=/opt/chud-h3/nodes.openjutsu.lock
-COMFY_COMMIT=b53f77a74e21091cbdebfdf7b85fc80326932646   # ComfyUI v0.41.2
+COMFY_COMMIT=423cbd20511becb1f16122ab518e92e58bfa03d9   # ComfyUI v0.43.2
 NODE_VERSION=22.23.4
 OPENJUTSU_COMMIT=7fe118bb5a61fcfac0148e1bfea3dd29884dbf26
 APP=/opt/openjutsu
@@ -23,7 +24,7 @@ PIP=("$PY" -m pip install --no-cache-dir -c /tmp/oj-constraints.txt)
 TORCH_BEFORE=$("$PY" -c 'import torch; print(torch.__version__)')
 
 echo
-echo "===== ComfyUI core -> v0.41.2 ====="
+echo "===== ComfyUI core -> v0.43.2 ====="
 test -d "$COMFY/.git" || { echo "ERROR: $COMFY is not a git checkout"; exit 1; }
 git -C "$COMFY" fetch --no-tags origin "$COMFY_COMMIT"
 git -C "$COMFY" checkout -f "$COMFY_COMMIT"
@@ -103,6 +104,15 @@ echo "===== comfy-api-proxy $PROXY_VERSION (own venv) ====="
 "$PY" -m venv --without-pip "$APP/.venv-proxy"
 "$PY" -m pip --python "$APP/.venv-proxy/bin/python" install --no-cache-dir -q "comfy-api-proxy==$PROXY_VERSION"
 "$APP/.venv-proxy/bin/python" "$APP/patch_proxy.py"
+
+echo
+echo "===== Node import check (CPU start, on a throw-away copy) ====="
+# No GPU on the build runner: --cpu --quick-test-for-ci starts ComfyUI once, which imports every node pack, then exits.
+# Informational only; the list of failed packs is what to look at before a pod run.
+rm -rf /tmp/comfy-check && cp -a "$COMFY" /tmp/comfy-check
+( cd /tmp/comfy-check && timeout 900 "$PY" main.py --cpu --quick-test-for-ci --disable-auto-launch 2>&1 ) \
+    | grep -E "IMPORT FAILED|seconds: |Cannot import|Traceback" | tail -80 || true
+rm -rf /tmp/comfy-check
 
 echo
 echo "===== MV Openjutsu ready (torch $TORCH_AFTER) ====="

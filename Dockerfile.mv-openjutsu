@@ -11,6 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 COPY nodes.openjutsu.lock /opt/chud-h3/nodes.openjutsu.lock
 COPY model_sources_openjutsu.tsv /opt/chud-h3/model_sources_openjutsu.tsv
 COPY model_sources_openjutsu_flux.tsv /opt/chud-h3/model_sources_openjutsu_flux.tsv
+COPY model_sources_stills_mix.tsv /opt/chud-h3/model_sources_stills_mix.tsv
 COPY install-openjutsu.sh /opt/chud-h3/install-openjutsu.sh
 COPY openjutsu-start.sh /opt/chud-h3/openjutsu-start.sh
 COPY openjutsu-services.sh /opt/chud-h3/openjutsu-services.sh

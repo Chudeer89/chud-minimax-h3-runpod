@@ -1,0 +1,15 @@
+# MV keyframe test "kreamossmix" (Civitai 3027247: MOSS Image + CyberRealistic Krea 2), CHUD_MODEL_SETS=stills.
+# MOSS Image: Apache-2.0. CyberRealistic Krea 2 v4.0: a Krea 2 derivative, so the Krea 2 Community License applies
+# (commercial only while revenue < US$1M, human review of outputs); Civitai page allows commercial image use.
+# krea2_identity_edit_v2: own licence (krea-2-identity-edit-v2-license), test only until the user gets commercial terms.
+# Civitai files need CIVITAI_TOKEN (template env); size and sha256 are pinned.
+# scheme|source|filename-or-destination|destination|revision(optional)
+#   civitai|model-version-id|file-id|destination|sha256|bytes
+hf|Comfy-Org/MOSS-Image|diffusion_models/moss_image_base_bf16.safetensors|diffusion_models/moss_image_base_bf16.safetensors|530a4c94f92c35ef6818b1b035a983fe9dcf5f54
+hf|Comfy-Org/MOSS-Image|diffusion_models/moss_image_sft_int8_convrot.safetensors|diffusion_models/moss_image_sft_int8_convrot.safetensors|530a4c94f92c35ef6818b1b035a983fe9dcf5f54
+hf|Comfy-Org/MOSS-Image|text_encoders/qwen3.5_9b_int8_convrot.safetensors|text_encoders/qwen3.5_9b_int8_convrot.safetensors|530a4c94f92c35ef6818b1b035a983fe9dcf5f54
+hf|Comfy-Org/MOSS-Image|vae/flux2-vae.safetensors|vae/flux2-vae.safetensors|530a4c94f92c35ef6818b1b035a983fe9dcf5f54
+civitai|3357068|3245517|diffusion_models/krea2Cyberrealistic_v40_bf16.safetensors|d59b79a874c5006333d136d4dfa0bad69722d196222218bb268549772c6c7850|25640191248
+civitai|3357068|3245749|text_encoders/krea2Cyberrealistic_v40_txt_bf16.safetensors|36f3ff447ef59201722e8f9ce6020c9819fdcfba6aa2608c4e09b1c0ce114e34|8875719384
+hf|Comfy-Org/Krea-2|vae/qwen_image_vae.safetensors|vae/qwen_image_vae.safetensors|1171f4dc7e325bf3734586942e737872506c73e1
+hf|conradlocke/krea2-identity-edit|krea2_identity_edit_v2.safetensors|loras/krea2_identity_edit_v2.safetensors|f33b26291c640e8ec50b0da420bfee3c9a660daa
