@@ -33,6 +33,9 @@ echo "[openjutsu] background download of the Openjutsu models -> /workspace/open
     if [ -n "${HF_TOKEN:-}" ]; then
         CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-openjutsu \
             CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_openjutsu_flux.tsv python3.12 /opt/chud-h3/download-models.py
+        # the official FLUX.3 Klein templates (MV stills) load the Hugging Face file name
+        KLEIN="$COMFY/models/diffusion_models/flux3_image_klein_sd_int8_convrot.safetensors"
+        [ -f "$KLEIN" ] && ln -sfn "$KLEIN" "$COMFY/models/diffusion_models/flux3-image-klein-int8-convrot.safetensors"
     else
         echo "[openjutsu] HF_TOKEN not set: FLUX.3 Klein (gated) skipped, so From picture / Relight cannot run"
     fi
