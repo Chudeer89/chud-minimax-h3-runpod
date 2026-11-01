@@ -1,12 +1,15 @@
-# Openjutsu "From picture" / Relight: FLUX.3 Image Klein (~19.5 GB). The repo is gated: accept the FLUX Kommunity License on
+# Openjutsu "From picture" / Relight: FLUX.3 Image Klein (~19.5 GB step-distilled int8 + ~20 GB full-step base bf16). The repo is gated: accept the FLUX Kommunity License on
 # huggingface.co/black-forest-labs/flux-3-image-klein-comfy with your account and start the pod with HF_TOKEN, or this
 # list is skipped. Commercial use of the OUTPUT is allowed only while revenue < US$5M, with a human review (or content
 # filter) of every output and an AI label where the law requires it.
 # qwen3vl_4b_int8_convrot is the text encoder of the official image_flux3_klein_distilled_image_edit template (MV stills);
 # Openjutsu itself loads qwen3vl_4b_fp8_scaled from the Krea 2 manifest.
+# Full-step (non-distilled) base bf16 + qwen3vl_4b_bf16: user 2026-11-01, kept beside the int8 distilled one to compare.
 # The workflows load the step-distilled Klein as flux3_image_klein_sd_int8_convrot.safetensors, hence the rename.
 # scheme|source|filename-or-destination|destination|revision(optional)
 hf|black-forest-labs/flux-3-image-klein-comfy|diffusion_models/flux3-image-klein-int8-convrot.safetensors|diffusion_models/flux3_image_klein_sd_int8_convrot.safetensors|feef60b0aaf63a4773ace96636ebbcf43b881312
 hf|black-forest-labs/flux-3-image-klein-comfy|text_encoders/qwen3.5_9b_flux3_prompt_upsampler_int8_convrot.safetensors|text_encoders/qwen3.5_9b_flux3_prompt_upsampler_int8_convrot.safetensors|feef60b0aaf63a4773ace96636ebbcf43b881312
 hf|black-forest-labs/flux-3-image-klein-comfy|vae/flux2-vae.safetensors|vae/flux2-vae.safetensors|feef60b0aaf63a4773ace96636ebbcf43b881312
 hf|black-forest-labs/flux-3-image-klein-comfy|text_encoders/qwen3vl_4b_int8_convrot.safetensors|text_encoders/qwen3vl_4b_int8_convrot.safetensors|feef60b0aaf63a4773ace96636ebbcf43b881312
+hf|black-forest-labs/flux-3-image-klein-comfy|diffusion_models/flux3-image-klein-base-bf16.safetensors|diffusion_models/flux3-image-klein-base-bf16.safetensors|feef60b0aaf63a4773ace96636ebbcf43b881312
+hf|black-forest-labs/flux-3-image-klein-comfy|text_encoders/qwen3vl_4b_bf16.safetensors|text_encoders/qwen3vl_4b_bf16.safetensors|feef60b0aaf63a4773ace96636ebbcf43b881312
