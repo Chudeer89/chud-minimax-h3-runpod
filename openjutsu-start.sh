@@ -10,6 +10,12 @@ set -euo pipefail
 export AIOHTTP_NOSENDFILE=1
 mkdir -p /workspace
 
+# CHUD_EXTRA_HF="repo|path|dest;..." : extra Hugging Face files (e.g. FLUX.3 LoRAs) in every mode
+if [ -n "${CHUD_EXTRA_HF:-}" ]; then
+    echo "[extra-hf] download starts now -> /workspace/extra-hf.log"
+    nohup /opt/chud-h3/extra-hf.sh > /workspace/extra-hf.log 2>&1 &
+fi
+
 if [ "${CHUD_FLUX_ONLY:-0}" = "1" ]; then
     BAKED=/opt/comfyui-baked
     COMFY=/workspace/runpod-slim/ComfyUI

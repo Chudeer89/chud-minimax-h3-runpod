@@ -25,6 +25,8 @@ jobs:
           bash -n openjutsu-start.sh
           bash -n openjutsu-services.sh
           bash -n flux-download.sh
+          bash -n extra-hf.sh
+          python3 -m py_compile convert_lora_keys.py
           grep -q '^FROM ${BASE_IMAGE}' Dockerfile.mv-openjutsu
 
       - name: Free disk space
