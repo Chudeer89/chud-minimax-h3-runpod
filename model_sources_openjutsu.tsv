@@ -1,0 +1,15 @@
+# Openjutsu models for the MV image (Dockerfile.mv-openjutsu): ~39 GB fetched in the BACKGROUND once ComfyUI is up.
+# Licences checked 2026-11-01 for the paid MV job:
+#   H3 ref2va pruned int8 + SolarRenderer LoRAs: MiniMax H3 Community License (commercial OK under US$20M revenue,
+#     NOT in the EU/UK/Korea/USA, show "MiniMax H3" in commercial UIs, label AI output in public).
+#   Qwen3-VL 8B describer: Apache-2.0.  SAM 3.1: Meta SAM License (commercial OK, no military/ITAR uses).
+# Reused from the core/Krea 2 manifests: DMAD LoRA, H3 video/audio VAE, H3 text encoder (nvfp4_awq; the app is patched to
+# it because Comfy-Org ships no int4_convrot), qwen3vl_4b_fp8_scaled, face_yolov8m.pt.
+# NOT downloaded: InsightFace buffalo_l (non-commercial only), so Fix faces is switched off; sam_vit_b and
+# person_yolov8m-seg (Fix faces only). FLUX.3 Klein is gated -> model_sources_openjutsu_flux.tsv, only with HF_TOKEN.
+# scheme|source|filename-or-destination|destination|revision(optional)
+hf|Comfy-Org/MiniMax-H3|diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|diffusion_models/minimax_h3_ref2va_pruned_int8_convrot.safetensors|912b6e38b2092ec4d2e86d24183e0d59ea059d48
+hf|Comfy-Org/Qwen3-VL|text_encoders/qwen3vl_8b_int8_convrot.safetensors|text_encoders/qwen3vl_8b_int8_convrot.safetensors|02f0d3eefb59528799653d16735818801177ef1f
+hf|Comfy-Org/sam3.1|checkpoints/sam3.1_multiplex_fp16.safetensors|checkpoints/sam3.1_multiplex_fp16.safetensors|7bb8374780a725b4353ed31f3a9395c9742b5621
+hf|Enderfga/SolarRenderer|solarrenderer_4step_lora.safetensors|loras/solarrenderer_4step_lora.safetensors|c5512be825f297ed8db390cbeda0289fb0c24779
+hf|Enderfga/SolarRenderer|solarrenderer_control_lora.safetensors|loras/solarrenderer_control_lora.safetensors|c5512be825f297ed8db390cbeda0289fb0c24779

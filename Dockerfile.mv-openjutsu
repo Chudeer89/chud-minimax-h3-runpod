@@ -1,0 +1,22 @@
+# MV image with Openjutsu (D:/Claude/mv_reverse, pod_mv.py --openjutsu). Built ONLY by .github/workflows/docker-mv-openjutsu.yml
+# on the mv-openjutsu branch, tagged mv-openjutsu-<sha>; the film image (Dockerfile, v24-* tags) is never rebuilt by it.
+# Base = the exact MV image pod_mv.py uses today (Krea 2 Turbo, commit 7871aa1, with H3 X2), so both stay as they are.
+ARG BASE_IMAGE=ghcr.io/chudeer89/chud-minimax-h3-runpod:v24-7871aa1002a43928265aacecd85e9fe6443c7939
+FROM ${BASE_IMAGE}
+
+USER root
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update -qq && apt-get install -y -qq --no-install-recommends python3.12-venv xz-utils && rm -rf /var/lib/apt/lists/*
+
+COPY nodes.openjutsu.lock /opt/chud-h3/nodes.openjutsu.lock
+COPY model_sources_openjutsu.tsv /opt/chud-h3/model_sources_openjutsu.tsv
+COPY model_sources_openjutsu_flux.tsv /opt/chud-h3/model_sources_openjutsu_flux.tsv
+COPY install-openjutsu.sh /opt/chud-h3/install-openjutsu.sh
+COPY openjutsu-start.sh /opt/chud-h3/openjutsu-start.sh
+COPY openjutsu-services.sh /opt/chud-h3/openjutsu-services.sh
+RUN chmod +x /opt/chud-h3/install-openjutsu.sh /opt/chud-h3/openjutsu-start.sh /opt/chud-h3/openjutsu-services.sh \
+    && /opt/chud-h3/install-openjutsu.sh
+
+ENV AIOHTTP_NOSENDFILE=1
+EXPOSE 3000
+ENTRYPOINT ["/opt/chud-h3/openjutsu-start.sh"]

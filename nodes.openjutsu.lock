@@ -1,0 +1,11 @@
+# MV image only (Dockerfile.mv-openjutsu): extra node packs for Openjutsu (D:/Claude/openjutsu, github.com/D3voz/openjutsu).
+# KJNodes, VideoHelperSuite, Fantastic PromptBuilder (01b6d8d, the revision Openjutsu was tested with), H3-FaceRefine and
+# Impact-Pack are already in the v24 image (nodes.lock) and are left as they are.
+# name|repo|commit
+ComfyUI-MiniMaxH3-Context-Loop|https://github.com/ethanfel/ComfyUI-MiniMaxH3-Context-Loop.git|43afeffcc570beb5f7382593e79e4b211c7e02f6
+comfyui-h3-oneclick-swap|https://github.com/D3voz/comfyui-h3-oneclick-swap.git|e44a56e92920000e675d14be484aea0d7498d63e
+SolarRenderer|https://github.com/Enderfga/SolarRenderer.git|0ca4f5e45b062cc9e9aee506de46aabdc22e4c3d
+comfyui_controlnet_aux|https://github.com/Fannovel16/comfyui_controlnet_aux.git|a587a4c1594524c1d2de5cd1a86cd868ff448e1c
+comfyui-image-detail-contrast|https://github.com/D3voz/comfyui-image-detail-contrast.git|485a5e246424ce012b998862b45f06d21e8d63b2
+Orion4D_FXMax|https://github.com/orion4d/Orion4D_FXMax.git|7048e8423ad7d1a6a52119d0d4870c2b7fc2885f
+comfyui-websocket-reconnect-fix|https://github.com/D3voz/comfyui-websocket-reconnect-fix.git|12b5fdf38e8bdbf8a560b9196561244bf65621f4

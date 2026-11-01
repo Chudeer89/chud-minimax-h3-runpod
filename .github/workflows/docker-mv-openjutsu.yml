@@ -1,0 +1,58 @@
+name: Build MV image + Openjutsu
+
+# MV only: runs on pushes to the mv-openjutsu branch and pushes mv-openjutsu* tags. The film build (docker-h3.yml,
+# v24* tags from h3-v2.4) is not touched.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - mv-openjutsu
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate scripts
+        run: |
+          bash -n install-openjutsu.sh
+          bash -n openjutsu-start.sh
+          bash -n openjutsu-services.sh
+          grep -q '^FROM ${BASE_IMAGE}' Dockerfile.mv-openjutsu
+
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android || true
+          sudo rm -rf /usr/share/dotnet || true
+          sudo rm -rf /opt/ghc || true
+          sudo rm -rf /opt/hostedtoolcache/CodeQL || true
+          docker system prune -af || true
+          df -h
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.mv-openjutsu
+          platforms: linux/amd64
+          push: true
+          provenance: false
+          tags: |
+            ghcr.io/chudeer89/chud-minimax-h3-runpod:mv-openjutsu
+            ghcr.io/chudeer89/chud-minimax-h3-runpod:mv-openjutsu-${{ github.sha }}
