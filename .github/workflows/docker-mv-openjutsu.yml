@@ -24,6 +24,7 @@ jobs:
           bash -n install-openjutsu.sh
           bash -n openjutsu-start.sh
           bash -n openjutsu-services.sh
+          bash -n flux-download.sh
           grep -q '^FROM ${BASE_IMAGE}' Dockerfile.mv-openjutsu
 
       - name: Free disk space

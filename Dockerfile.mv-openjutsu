@@ -14,8 +14,9 @@ COPY model_sources_openjutsu_flux.tsv /opt/chud-h3/model_sources_openjutsu_flux.
 COPY install-openjutsu.sh /opt/chud-h3/install-openjutsu.sh
 COPY openjutsu-start.sh /opt/chud-h3/openjutsu-start.sh
 COPY openjutsu-services.sh /opt/chud-h3/openjutsu-services.sh
+COPY flux-download.sh /opt/chud-h3/flux-download.sh
 RUN chmod +x /opt/chud-h3/install-openjutsu.sh /opt/chud-h3/openjutsu-start.sh /opt/chud-h3/openjutsu-services.sh \
-    && /opt/chud-h3/install-openjutsu.sh
+    /opt/chud-h3/flux-download.sh && /opt/chud-h3/install-openjutsu.sh
 
 ENV AIOHTTP_NOSENDFILE=1
 EXPOSE 3000
