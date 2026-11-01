@@ -15,7 +15,8 @@ MANIFEST="$RAW/manifest.tsv"
 : > "$MANIFEST"
 IFS=';' read -r -a ENTRIES <<< "$LIST"
 for entry in "${ENTRIES[@]}"; do
-    entry="${entry// /}"
+    # trim the ends only: file names inside a repo can contain spaces
+    entry="${entry#"${entry%%[![:space:]]*}"}"; entry="${entry%"${entry##*[![:space:]]}"}"
     [ -z "$entry" ] && continue
     IFS='|' read -r repo path dest rev <<< "$entry"
     if [ -z "${repo:-}" ] || [ -z "${path:-}" ] || [ -z "${dest:-}" ]; then
@@ -36,7 +37,9 @@ while IFS='|' read -r _ _ _ dest _; do
     mkdir -p "$(dirname "$COMFY/models/$dest")"
     case "$dest" in
         loras/*.safetensors) python3.12 /opt/chud-h3/convert_lora_keys.py "$src" "$COMFY/models/$dest" ;;
-        *) cp -f "$src" "$COMFY/models/$dest" && echo "[extra-hf] copied $dest" ;;
+        # a hard link on the same volume: no second copy of multi-GB files, and the raw file stays for reuse
+        *) { ln -f "$src" "$COMFY/models/$dest" 2>/dev/null || cp -f "$src" "$COMFY/models/$dest"; } \
+               && echo "[extra-hf] placed $dest" ;;
     esac
 done < "$MANIFEST"
 echo "[extra-hf] done"
