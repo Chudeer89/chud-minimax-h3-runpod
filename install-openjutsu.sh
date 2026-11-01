@@ -14,6 +14,7 @@ APP=/opt/openjutsu
 PROXY_VERSION=0.1.6
 
 echo "===== MV Openjutsu: runtime constraints of the base ====="
+ls -la /usr/lib/python3.12/EXTERNALLY-MANAGED 2>/dev/null && echo "WARN: EXTERNALLY-MANAGED marker present" || true
 cat /opt/comfyui-runtime-constraints.txt || true
 # Keep the Torch/CUDA pins, drop the frontend/aimdo pins that ComfyUI 0.41.2 raises in its own requirements.txt.
 grep -viE '^(comfyui-frontend-package|comfyui-workflow-templates|comfyui-embedded-docs|comfy-aimdo|comfy-kitchen)([<>=! ]|$)' \
@@ -59,12 +60,12 @@ fi
 echo
 echo "===== Node.js $NODE_VERSION ====="
 cd /tmp
-curl -fsSLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz"
+curl -fsSLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz"
 curl -fsSLO "https://nodejs.org/dist/v$NODE_VERSION/SHASUMS256.txt"
-grep " node-v$NODE_VERSION-linux-x64.tar.xz\$" SHASUMS256.txt | sha256sum -c -
+grep " node-v$NODE_VERSION-linux-x64.tar.gz\$" SHASUMS256.txt | sha256sum -c -
 mkdir -p /opt/node22
-tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /opt/node22 --strip-components=1
-rm -f "node-v$NODE_VERSION-linux-x64.tar.xz" SHASUMS256.txt
+tar -xzf "node-v$NODE_VERSION-linux-x64.tar.gz" -C /opt/node22 --strip-components=1
+rm -f "node-v$NODE_VERSION-linux-x64.tar.gz" SHASUMS256.txt
 export PATH=/opt/node22/bin:$PATH
 node --version
 
@@ -97,8 +98,10 @@ fi
 
 echo
 echo "===== comfy-api-proxy $PROXY_VERSION (own venv) ====="
-"$PY" -m venv "$APP/.venv-proxy"
-"$APP/.venv-proxy/bin/python" -m pip install --no-cache-dir -q "comfy-api-proxy==$PROXY_VERSION"
+# Debian's python3.12 has no ensurepip without the python3.12-venv package, so the venv is made without pip and the
+# image's own pip installs into it (--python).
+"$PY" -m venv --without-pip "$APP/.venv-proxy"
+"$PY" -m pip --python "$APP/.venv-proxy/bin/python" install --no-cache-dir -q "comfy-api-proxy==$PROXY_VERSION"
 "$APP/.venv-proxy/bin/python" "$APP/patch_proxy.py"
 
 echo
