@@ -1,15 +1,49 @@
 #!/usr/bin/env bash
-# Background part of openjutsu-start.sh: once ComfyUI answers, fetch the Openjutsu models and keep comfy-api-proxy
-# (127.0.0.1:8189) and the Openjutsu app (port 3000) running.
+# Background part of openjutsu-start.sh: FLUX.3 Klein downloads at once (beside the v24 downloads); once ComfyUI answers,
+# the Openjutsu models follow and comfy-api-proxy (127.0.0.1:8189) and the Openjutsu app (port 3000) keep running.
+# CHUD_OPENJUTSU_MODELS=0 skips the ~40 GB Openjutsu set (FLUX stills only).
 set -uo pipefail
 
 COMFY=/workspace/runpod-slim/ComfyUI
 APP=/opt/openjutsu
+FLUX_TSV=/opt/chud-h3/model_sources_openjutsu_flux.tsv
+# docker-start.sh copies ComfyUI onto the volume on first boot, so FLUX lands beside it and is moved in afterwards
+EARLY=/workspace/flux-early
 export PATH=/opt/node22/bin:$PATH
 export NEXT_TELEMETRY_DISABLED=1
 
+comfy_up() {
+    until curl -fs -o /dev/null -m 5 http://127.0.0.1:8188/system_stats; do sleep 10; done
+}
+
+if [ -n "${HF_TOKEN:-}" ]; then
+    echo "[openjutsu] FLUX.3 Klein download starts now -> /workspace/flux-models.log"
+    (
+        missing=0
+        for dest in $(grep -v '^#' "$FLUX_TSV" | cut -d'|' -f4); do
+            [ -s "$COMFY/models/$dest" ] || missing=1
+        done
+        if [ "$missing" = 1 ]; then
+            CHUD_H3_COMFY="$EARLY" CHUD_H3_STAGE=/workspace/h3-stage-flux CHUD_H3_MANIFEST="$FLUX_TSV"                 python3.12 /opt/chud-h3/download-models.py
+        fi
+        comfy_up
+        for dest in $(grep -v '^#' "$FLUX_TSV" | cut -d'|' -f4); do
+            if [ -s "$EARLY/models/$dest" ] && [ ! -s "$COMFY/models/$dest" ]; then
+                mkdir -p "$(dirname "$COMFY/models/$dest")"
+                mv -f "$EARLY/models/$dest" "$COMFY/models/$dest"
+            fi
+        done
+        # the official FLUX.3 Klein templates (MV stills) load the Hugging Face file name
+        KLEIN="$COMFY/models/diffusion_models/flux3_image_klein_sd_int8_convrot.safetensors"
+        [ -f "$KLEIN" ] && ln -sfn "$KLEIN" "$COMFY/models/diffusion_models/flux3-image-klein-int8-convrot.safetensors"
+        echo "[openjutsu] FLUX.3 Klein files are in ComfyUI/models"
+    ) > /workspace/flux-models.log 2>&1 &
+else
+    echo "[openjutsu] HF_TOKEN not set: FLUX.3 Klein (gated) skipped, so From picture / Relight / stills cannot run"
+fi
+
 echo "[openjutsu] waiting for ComfyUI on 127.0.0.1:8188"
-until curl -fs -o /dev/null -m 5 http://127.0.0.1:8188/system_stats; do sleep 10; done
+comfy_up
 echo "[openjutsu] ComfyUI is up"
 
 # Openjutsu loads the DMAD LoRA from the loras root; the core manifest keeps it under MINIMAX/.
@@ -26,20 +60,12 @@ else
     echo "[openjutsu] WARNING: $BUFFALO already has files (non-commercial licence)"
 fi
 
-echo "[openjutsu] background download of the Openjutsu models -> /workspace/openjutsu-models.log"
-(
-    CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-openjutsu \
-        CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_openjutsu.tsv python3.12 /opt/chud-h3/download-models.py
-    if [ -n "${HF_TOKEN:-}" ]; then
-        CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-openjutsu \
-            CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_openjutsu_flux.tsv python3.12 /opt/chud-h3/download-models.py
-        # the official FLUX.3 Klein templates (MV stills) load the Hugging Face file name
-        KLEIN="$COMFY/models/diffusion_models/flux3_image_klein_sd_int8_convrot.safetensors"
-        [ -f "$KLEIN" ] && ln -sfn "$KLEIN" "$COMFY/models/diffusion_models/flux3-image-klein-int8-convrot.safetensors"
-    else
-        echo "[openjutsu] HF_TOKEN not set: FLUX.3 Klein (gated) skipped, so From picture / Relight cannot run"
-    fi
-) > /workspace/openjutsu-models.log 2>&1 &
+if [ "${CHUD_OPENJUTSU_MODELS:-1}" != "0" ]; then
+    echo "[openjutsu] background download of the Openjutsu models -> /workspace/openjutsu-models.log"
+    CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-openjutsu         CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_openjutsu.tsv         nohup python3.12 /opt/chud-h3/download-models.py > /workspace/openjutsu-models.log 2>&1 &
+else
+    echo "[openjutsu] CHUD_OPENJUTSU_MODELS=0: Openjutsu models skipped (FLUX stills only)"
+fi
 
 # The app refuses a network address without a password of 12+ characters; without one it stays inside the pod.
 HOST=127.0.0.1
