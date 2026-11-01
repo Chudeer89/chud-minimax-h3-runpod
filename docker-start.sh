@@ -121,6 +121,12 @@ if [ "${CHUD_X2:-1}" != "0" ]; then
     CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-x2 CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_x2.tsv         nohup python3.12 /opt/chud-h3/download-models.py > /workspace/x2-models.log 2>&1 &
 fi
 
+# Krea 2 Turbo keyframes (D:/Claude/mv_reverse): ~19 GB in the background, same way as x2. CHUD_KREA2=0 skips them.
+if [ "${CHUD_KREA2:-1}" != "0" ]; then
+    echo "[krea2] Background download of the Krea 2 Turbo models -> /workspace/krea2-models.log"
+    CHUD_H3_COMFY="$COMFY" CHUD_H3_STAGE=/workspace/h3-stage-krea2 CHUD_H3_MANIFEST=/opt/chud-h3/model_sources_krea2.tsv         nohup python3.12 /opt/chud-h3/download-models.py > /workspace/krea2-models.log 2>&1 &
+fi
+
 echo
 echo "===== V2.4 READY ====="
 echo "Modules: ${CHUD_V24_MODULES:-none}"

@@ -1,0 +1,9 @@
+# Krea 2 Turbo keyframes for MV Reverse (D:/Claude/mv_reverse): ~19 GB fetched in the BACKGROUND after the core models,
+# so ComfyUI starts as usual; mv_reverse waits for these files. Krea 2 Community License: commercial use only while
+# annual revenue < $1M, keep human review of every output, disclose AI where a platform requires it.
+# ComfyUI core 3c80da7 already ships comfy/ldm/krea2 (CLIPLoader type "krea2").
+# scheme|source|filename-or-destination|destination|revision(optional)
+hf|Comfy-Org/Krea-2|diffusion_models/krea2_turbo_fp8_scaled.safetensors|diffusion_models/krea2_turbo_fp8_scaled.safetensors|1171f4dc7e325bf3734586942e737872506c73e1
+hf|Comfy-Org/Krea-2|text_encoders/qwen3vl_4b_fp8_scaled.safetensors|text_encoders/qwen3vl_4b_fp8_scaled.safetensors|1171f4dc7e325bf3734586942e737872506c73e1
+hf|Comfy-Org/Krea-2|vae/qwen_image_vae.safetensors|vae/qwen_image_vae.safetensors|1171f4dc7e325bf3734586942e737872506c73e1
+hf|Comfy-Org/Krea-2|loras/krea2_style_reference.safetensors|loras/krea2_style_reference.safetensors|1171f4dc7e325bf3734586942e737872506c73e1
