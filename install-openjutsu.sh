@@ -38,8 +38,13 @@ while IFS='|' read -r name repo commit; do
     case "$name" in \#*) continue ;; esac
     echo "--- $name @ $commit"
     dst="$COMFY/custom_nodes/$name"
-    rm -rf "$dst"
-    git clone --filter=blob:none --no-tags "$repo" "$dst"
+    # GitHub resets a clone now and then mid-build (2026-11-02 SolarRenderer), so try three times
+    for try in 1 2 3; do
+        rm -rf "$dst"
+        git clone --filter=blob:none --no-tags "$repo" "$dst" && break
+        [ "$try" = 3 ] && exit 1
+        echo "clone failed, retrying in 10 s"; sleep 10
+    done
     git -C "$dst" fetch --no-tags origin "$commit" >/dev/null 2>&1 || true
     git -C "$dst" checkout -f "$commit"
     if [ -f "$dst/requirements.txt" ]; then
@@ -110,9 +115,14 @@ echo "===== Node import check (CPU start, on a throw-away copy) ====="
 # No GPU on the build runner: --cpu --quick-test-for-ci starts ComfyUI once, which imports every node pack, then exits.
 # Informational only; the list of failed packs is what to look at before a pod run.
 rm -rf /tmp/comfy-check && cp -a "$COMFY" /tmp/comfy-check
-( cd /tmp/comfy-check && timeout 900 "$PY" main.py --cpu --quick-test-for-ci --disable-auto-launch 2>&1 ) \
-    | grep -E "IMPORT FAILED|seconds: |Cannot import|Traceback" | tail -80 || true
-rm -rf /tmp/comfy-check
+( cd /tmp/comfy-check && timeout 900 "$PY" main.py --cpu --quick-test-for-ci --disable-auto-launch ) \
+    > /tmp/comfy-check.log 2>&1 || true
+grep -E "IMPORT FAILED" /tmp/comfy-check.log || echo "no IMPORT FAILED"
+# the full traceback of every pack that did not load (ComfyUI prints it just before "Cannot import ...")
+awk '/Traceback \(most recent call last\)/ {buf=""; keep=1} keep {buf = buf $0 "\n"}
+     /Cannot import .* module for custom nodes/ {print "----- " $0; printf "%s", buf; keep=0; buf=""}' /tmp/comfy-check.log \
+    | tail -200
+rm -rf /tmp/comfy-check /tmp/comfy-check.log
 
 echo
 echo "===== MV Openjutsu ready (torch $TORCH_AFTER) ====="
