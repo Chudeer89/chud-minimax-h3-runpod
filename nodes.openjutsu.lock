@@ -1,7 +1,6 @@
 # MV image only (Dockerfile.mv-openjutsu): extra node packs for Openjutsu (D:/Claude/openjutsu, github.com/D3voz/openjutsu).
 # KJNodes, VideoHelperSuite, Fantastic PromptBuilder (01b6d8d, the revision Openjutsu was tested with), H3-FaceRefine and
 # Impact-Pack are already in the v24 image (nodes.lock) and are left as they are.
-# SeedVR2 upscaler (Apache-2.0, user approved 2026-11-01): MV stills; models in models/SEEDVR2.
 # Krea 2 Identity Edit nodes (Apache-2.0, no dependencies, torch/einops/comfy imports only): MV stills mix.
 # name|repo|commit
 ComfyUI-MiniMaxH3-Context-Loop|https://github.com/ethanfel/ComfyUI-MiniMaxH3-Context-Loop.git|43afeffcc570beb5f7382593e79e4b211c7e02f6
@@ -11,5 +10,4 @@ comfyui_controlnet_aux|https://github.com/Fannovel16/comfyui_controlnet_aux.git|
 comfyui-image-detail-contrast|https://github.com/D3voz/comfyui-image-detail-contrast.git|485a5e246424ce012b998862b45f06d21e8d63b2
 Orion4D_FXMax|https://github.com/orion4d/Orion4D_FXMax.git|7048e8423ad7d1a6a52119d0d4870c2b7fc2885f
 comfyui-websocket-reconnect-fix|https://github.com/D3voz/comfyui-websocket-reconnect-fix.git|12b5fdf38e8bdbf8a560b9196561244bf65621f4
-ComfyUI-SeedVR2_VideoUpscaler|https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git|4490bd1f482e026674543386bb2a4d176da245b9
 comfyui-krea2edit|https://github.com/lbouaraba/comfyui-krea2edit.git|13ef60f20828949becada815d3cbc371eb5ccaab
